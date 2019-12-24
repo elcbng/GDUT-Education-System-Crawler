@@ -18,8 +18,12 @@ class GdutcrawlerApplicationTests {
     private ICrawlerService crawlerService;
 
     @Test
-    void contextLoads() throws IOException, LoginException, MaxFrequencyException, ParameterIsNullException, EducationSystemException {
-        System.out.println(crawlerService.getLoginResponse(" "," "));
+    void contextLoads() {
+        try {
+            System.out.println(crawlerService.getLoginResponse("schoolId", "password"));
+        } catch (LoginException | IOException | ParameterIsNullException | EducationSystemException | MaxFrequencyException e) {
+            e.printStackTrace();
+        }
     }
 
 }

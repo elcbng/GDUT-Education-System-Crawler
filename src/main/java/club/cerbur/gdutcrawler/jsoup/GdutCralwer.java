@@ -19,27 +19,58 @@ import java.util.Map;
  */
 public class GdutCralwer implements Crawler {
 
+    /**
+     * 这里是schoolId但为了和统一身份认证系统的表单统一所以取名username
+     */
     private String username;
 
+    /**
+     * 统一身份认证系统的密码
+     */
     private String password;
 
+    /**
+     * 最大超时时间
+     */
     private int outTime;
 
+    /**
+     * 最大请求次数
+     */
     private int maxFrequency;
 
-    /**
-     *
-     */
-    public static final String LOGIN_URL = "http://authserver.gdut.edu.cn/authserver/login?service=http://jxfw.gdut.edu.cn/new/ssoLogin";
-
-
-    @Override
-    public Response connect() throws ParameterIsNullException, EducationSystemException, LoginException, IOException, MaxFrequencyException {
+    public GdutCralwer(String username, String password) throws ParameterIsNullException {
+        //如果username或者password为空则此类不能被创建并抛出异常
         if (username.isBlank()) {
             throw new ParameterIsNullException("username");
         } else if (password.isBlank()) {
             throw new ParameterIsNullException("password");
         }
+        this.username = username;
+        this.password = password;
+        this.outTime = DEFAULT_OUT_TIME;
+        this.maxFrequency = DEFAULT_MAX_FREQUENCY;
+    }
+
+    /**
+     * 登录的URL
+     * [GET]:获取页面参数和cookie
+     * [POST]:提交登录请求获取教务系统Cookie
+     */
+    public static final String LOGIN_URL = "http://authserver.gdut.edu.cn/authserver/login?service=http://jxfw.gdut.edu.cn/new/ssoLogin";
+
+    /**
+     * 类成功被创建后用于登录获取cookies
+     *
+     * @return 带有cookie的下一个请求体
+     * @throws ParameterIsNullException 必要参数为空异常
+     * @throws EducationSystemException 教务系统异常
+     * @throws LoginException           登录异常/密码错误
+     * @throws IOException              IO异常/不太可能出现
+     * @throws MaxFrequencyException    最大请求次数异常
+     */
+    @Override
+    public Response connect() throws ParameterIsNullException, EducationSystemException, LoginException, IOException, MaxFrequencyException {
         Connection.Response response = null;
         var i = 0;
         while (i++ < maxFrequency && response == null) {
@@ -47,9 +78,12 @@ public class GdutCralwer implements Crawler {
                     .timeout(this.outTime)
                     .execute();
         }
+        //多次请求失败则认为是教务系统发生异常
         if (response == null) {
             throw new EducationSystemException();
         }
+
+        //Jsoup处理文本内容提取隐藏的参数
         Document doc = response.parse();
         Element content = doc.getElementById("casLoginForm");
         Elements links = content.getElementsByTag("input");
@@ -62,8 +96,11 @@ public class GdutCralwer implements Crawler {
         if (dataMap.isEmpty()) {
             throw new ParameterIsNullException("Hidden dataMap");
         }
+        //构建form表单提交的参数
         dataMap.put("username", this.username);
         dataMap.put("password", this.password);
+
+
         var j = 0;
         Connection.Response res = null;
         while (j++ < maxFrequency && res == null) {
@@ -79,6 +116,8 @@ public class GdutCralwer implements Crawler {
             throw new EducationSystemException();
         }
         Map<String, String> cookies = res.cookies();
+
+        //如果cookies为空说明密码错误抛出异常
         if (cookies.isEmpty()) {
             throw new LoginException("LoginFail...May be caused by your wrong password");
         }
@@ -107,7 +146,8 @@ public class GdutCralwer implements Crawler {
         /**
          * 爬虫仅仅获取目标json字符串不做任何处理，可通过service层自行提取所需字符
          *
-         * @return string
+         * @return 不做任何处理的课表json字符串
+         * @throws MaxFrequencyException 抛出连接超过最大上限异常/多次请求未成功
          */
         public String getSchedule() throws MaxFrequencyException {
             Map<String, String> dataMap = new HashMap<>(6);
@@ -119,6 +159,12 @@ public class GdutCralwer implements Crawler {
             return getString(dataMap, SCHEDULE_URL);
         }
 
+        /**
+         * 爬虫仅仅获取目标json字符串不做任何处理，可通过service层自行提取所需字符
+         *
+         * @return 不做任何处理的课表json字符串
+         * @throws MaxFrequencyException
+         */
         public String getGrade() throws MaxFrequencyException {
             Map<String, String> dataMap = new HashMap<>(6);
             dataMap.put("xnxqdm", "");
@@ -129,6 +175,12 @@ public class GdutCralwer implements Crawler {
             return getString(dataMap, GRADE_URL);
         }
 
+        /**
+         * 爬虫仅仅获取目标json字符串不做任何处理，可通过service层自行提取所需字符
+         *
+         * @return 不做任何处理的成绩json字符串
+         * @throws MaxFrequencyException 抛出连接超过最大上限异常/多次请求未成功
+         */
         public String getExam() throws MaxFrequencyException {
             Map<String, String> dataMap = new HashMap<>(6);
             dataMap.put("xnxqdm", "201901");
@@ -139,6 +191,12 @@ public class GdutCralwer implements Crawler {
             return getString(dataMap, EXAM_URL);
         }
 
+        /**
+         * 爬虫仅仅获取目标json字符串不做任何处理，可通过service层自行提取所需字符
+         *
+         * @return 校区字符串/如：大学城校区
+         * @throws MaxFrequencyException 抛出连接超过最大上限异常/多次请求未成功
+         */
         public String getCampus() throws MaxFrequencyException {
             String res = null;
             var i = 0;
@@ -215,12 +273,6 @@ public class GdutCralwer implements Crawler {
         return this;
     }
 
-    public GdutCralwer(String username, String password) {
-        this.username = username;
-        this.password = password;
-        this.outTime = DEFAULT_OUT_TIME;
-        this.maxFrequency = DEFAULT_MAX_FREQUENCY;
-    }
 
 
 }
