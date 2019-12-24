@@ -29,60 +29,173 @@
 					<div class="row gtr-150">
 						<div class="col-6 col-12-medium">
 							<header class="major">
-								<h2>已开发完成的<br />
-								接口</h2>
+								<h2>已开发完成的    	接口</h2>
 							</header>
-							<p><a href="#four" class="button scrolly">获取课表</a><br/>
-							<a href="#" class="button scrolly">获取成绩</a><br/>
-							<a href="#" class="button scrolly">获取校区</a><br/>
-							<a href="#" class="button scrolly">获取考试</a><br/>
-							<!-- <a href="#" class="button scrolly">获取全部</a></p> -->
+							<p><a href="#class" class="button scrolly">获取课表</a>
+							<a href="#grade" class="button scrolly">获取成绩</a><br/>
+							<a href="#campus" class="button scrolly">获取校区</a>
+							<a href="#exam" class="button scrolly">获取考试</a><br/>
+							<a href="#all" class="button scrolly">获取全部</a>
+							<a href="#extra" class="button scrolly">无限可能</a></p>
 						</div>
 						<div class="col-6 col-12-medium imp-medium">
-							<span class="image fit"><img src="images/pic01.jpg" alt="" /></span>
+							<span class="image fit"><img src="images/api01.jpg"  alt="" /></span>
 						</div>
 					</div>
 				</div>
 			</section>
 
-		<!-- Two -->
-			<section id="two" class="main style2">
+		<!-- class -->
+			<section id="class" class="main style2">
 				<div class="container">
 					<div class="row gtr-150">
 						<div class="col-6 col-12-medium">
 							<ul class="major-icons">
 								<li><span class="icon solid style1 major fa-code"></span></li>
+								<!-- <li><span class="icon solid style2 major fa-bolt"></span></li> -->
+								<!-- <li><span class="icon solid style3 major fa-camera-retro"></span></li> -->
+								<!-- <li><span class="icon solid style4 major fa-cog"></span></li> -->
+								<!-- <li><span class="icon solid style5 major fa-desktop"></span></li> -->
+								<!-- <li><span class="icon solid style6 major fa-calendar"></span></li> -->
+							</ul>
+						</div>
+						<div class="col-6 col-12-medium">
+							<header class="major">
+								<h2>获取课表</h2>
+							</header>
+							<p>提交方式:[POST]<br/>
+							URL: https://gdutday.cerbur.club/class<br/>
+							param: schoolId(string), password(string)<br/>
+							return: url
+							</p>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- grade -->
+			<section id="grade" class="main style2">
+				<div class="container">
+					<div class="row gtr-150">
+						<div class="col-6 col-12-medium">
+							<header class="major">
+								<h2>获取成绩</h2>
+							</header>
+							<p>提交方式:[POST]<br/>
+								URL: https://gdutday.cerbur.club/grade<br/>
+								param: schoolId(string), password(string)<br/>
+								return: url
+							</p>
+						</div>
+						<div class="col-6 col-12-medium">
+							<ul class="major-icons">
+								<!-- <li><span class="icon solid style1 major fa-code"></span></li> -->
 								<li><span class="icon solid style2 major fa-bolt"></span></li>
+								<!-- <li><span class="icon solid style3 major fa-camera-retro"></span></li> -->
+								<!-- <li><span class="icon solid style4 major fa-cog"></span></li> -->
+								<!-- <li><span class="icon solid style5 major fa-desktop"></span></li> -->
+								<!-- <li><span class="icon solid style6 major fa-calendar"></span></li> -->
+							</ul>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- class -->
+			<section id="campus" class="main style2">
+				<div class="container">
+					<div class="row gtr-150">
+						<div class="col-6 col-12-medium">
+							<ul class="major-icons">
+								<!-- <li><span class="icon solid style1 major fa-code"></span></li> -->
+								<!-- <li><span class="icon solid style2 major fa-bolt"></span></li> -->
 								<li><span class="icon solid style3 major fa-camera-retro"></span></li>
-								<li><span class="icon solid style4 major fa-cog"></span></li>
-								<li><span class="icon solid style5 major fa-desktop"></span></li>
+								<!-- <li><span class="icon solid style4 major fa-cog"></span></li> -->
+								<!-- <li><span class="icon solid style5 major fa-desktop"></span></li> -->
+								<!-- <li><span class="icon solid style6 major fa-calendar"></span></li> -->
+							</ul>
+						</div>
+						<div class="col-6 col-12-medium">
+							<header class="major">
+								<h2>获取校区</h2>
+							</header>
+							<p>提交方式:[POST]<br/>
+							URL: https://gdutday.cerbur.club/campus<br/>
+							param: schoolId(string), password(string)<br/>
+							return: url
+							</p>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- exam -->
+			<section id="exam" class="main style2">
+				<div class="container">
+					<div class="row gtr-150">
+						<div class="col-6 col-12-medium">
+							<header class="major">
+								<h2>获取考试</h2>
+							</header>
+							<p>提交方式:[POST]<br/>
+								URL: https://gdutday.cerbur.club/exam<br/>
+								param: schoolId(string), password(string)<br/>
+								return: url
+							</p>
+						</div>
+						<div class="col-6 col-12-medium">
+							<ul class="major-icons">
+								<!-- <li><span class="icon solid style1 major fa-code"></span></li> -->
+								<!-- <li><span class="icon solid style2 major fa-bolt"></span></li> -->
+								<!-- <li><span class="icon solid style3 major fa-camera-retro"></span></li> -->
+								<!-- <li><span class="icon solid style4 major fa-cog"></span></li> -->
+								<!-- <li><span class="icon solid style5 major fa-desktop"></span></li> -->
+								<li><span class="icon solid style6 major fa-calendar"></span></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- all -->
+			<section id="all" class="main style2">
+				<div class="container">
+					<div class="row gtr-150">
+						<div class="col-6 col-12-medium">
+							<ul class="major-icons">
+								<!-- <li><span class="icon solid style1 major fa-code"></span></li> -->
+								<!-- <li><span class="icon solid style2 major fa-bolt"></span></li> -->
+								<!-- <li><span class="icon solid style3 major fa-camera-retro"></span></li> -->
+								<!-- <li><span class="icon solid style4 major fa-cog"></span></li> -->
+								<!-- <li><span class="icon solid style5 major fa-desktop"></span></li> -->
 								<li><span class="icon solid style6 major fa-calendar"></span></li>
 							</ul>
 						</div>
 						<div class="col-6 col-12-medium">
 							<header class="major">
-								<h2>Lorem ipsum dolor adipiscing<br />
-								amet dolor consequat</h2>
+								<h2>获取全部</h2>
 							</header>
-							<p>Adipiscing a commodo ante nunc accumsan interdum mi ante adipiscing. A nunc lobortis non nisl amet vis volutpat aclacus nascetur ac non. Lorem curae eu ante amet sapien in tempus ac. Adipiscing id accumsan adipiscing ipsum.</p>
-							<p>Blandit faucibus proin. Ac aliquam integer adipiscing enim non praesent vis commodo nunc phasellus cubilia ac risus accumsan. Accumsan blandit. Lobortis phasellus non lobortis dit varius mi varius accumsan lobortis. Blandit ante aliquam lacinia lorem lobortis semper morbi col faucibus vitae integer placerat accumsan orci eu mi odio tempus adipiscing adipiscing adipiscing curae consequat feugiat etiam dolore.</p>
-							<p>Adipiscing a commodo ante nunc accumsan interdum mi ante adipiscing. A nunc lobortis non nisl amet vis volutpat aclacus nascetur ac non. Lorem curae eu ante amet sapien in tempus ac. Adipiscing id accumsan adipiscing ipsum.</p>
+							<p>提交方式:[POST]<br/>
+							URL: https://gdutday.cerbur.club/all<br/>
+							param: schoolId(string), password(string)<br/>
+							return: url
+							</p>
 						</div>
 					</div>
 				</div>
 			</section>
 
 
-		<!-- Four -->
-			<section id="four" class="main style2 special">
+		<!-- extra -->
+			<section id="extra" class="main style2 special">
 				<div class="container">
 					<header class="major">
-						<h2>Ipsum feugiat consequat?</h2>
+						<h2>有兴趣加入开发吗?</h2>
 					</header>
-					<p>Sed lacus nascetur ac ante amet sapien.</p>
+					<p>查看本项目的GitHub,repo里面有加入我们的方式.</p>
 					<ul class="actions special">
-						<li><a href="#" class="button wide primary">Sign Up</a></li>
-						<li><a href="#" class="button wide">Learn More</a></li>
+						<li><a href="https://blog.cerbur.club" class="button wide">Blog</a></li>
+						<li><a href="https://github.com/Cerbur" class="button wide primary">GitHub</a></li>
 					</ul>
 				</div>
 			</section>
@@ -98,7 +211,7 @@
 					<!-- <li><a href="#" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li> -->
 				</ul>
 				<ul class="copyright">
-					<li>&copy; Untitled</li><li>Design: <a target="view_window" href="https://blog.cerbur.club">Cerbur</a></li>
+					<li>&copy; zyc</li><li>Design: <a target="view_window" href="https://blog.cerbur.club">Cerbur</a></li>
 				</ul>
 			</section>
 
