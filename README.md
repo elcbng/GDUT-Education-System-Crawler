@@ -1,4 +1,5 @@
 # GDUT-Education-System-Crawle  
+负责人[@Cerbur](https://github.com/Cerbur)
 # 广东工业大学-教务系统爬虫  
 ## 考试月没有时间写README先用blog代替了  
 1. [Cerbur的blog](https://blog.cerbur.club)  
@@ -9,4 +10,4 @@
 QQ：1051140642  
 历史commit有敏感信息,已经重推了  
 目前此项目就当从这开始吧  
-仓库移交至elcbng
+仓库移交至[elcbng](https://github.com/elcbng)  
