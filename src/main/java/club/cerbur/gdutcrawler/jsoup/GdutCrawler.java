@@ -17,7 +17,7 @@ import java.util.Map;
 /**
  * @author cerbur
  */
-public class GdutCralwer implements Crawler {
+public class GdutCrawler implements Crawler {
 
     /**
      * 这里是schoolId但为了和统一身份认证系统的表单统一所以取名username
@@ -39,7 +39,7 @@ public class GdutCralwer implements Crawler {
      */
     private int maxFrequency;
 
-    public GdutCralwer(String username, String password) throws ParameterIsNullException {
+    public GdutCrawler(String username, String password) throws ParameterIsNullException {
         //如果username或者password为空则此类不能被创建并抛出异常
         if (username.isBlank()) {
             throw new ParameterIsNullException("username");
@@ -67,10 +67,9 @@ public class GdutCralwer implements Crawler {
      * @throws EducationSystemException 教务系统异常
      * @throws LoginException           登录异常/密码错误
      * @throws IOException              IO异常/不太可能出现
-     * @throws MaxFrequencyException    最大请求次数异常
      */
     @Override
-    public Response connect() throws ParameterIsNullException, EducationSystemException, LoginException, IOException, MaxFrequencyException {
+    public Response connect() throws ParameterIsNullException, EducationSystemException, LoginException, IOException {
         Connection.Response response = null;
         var i = 0;
         while (i++ < maxFrequency && response == null) {
@@ -83,20 +82,22 @@ public class GdutCralwer implements Crawler {
             throw new EducationSystemException();
         }
 
-        //Jsoup处理文本内容提取隐藏的参数
+        //处理文本内容提取隐藏的参数
         Document doc = response.parse();
         Element content = doc.getElementById("casLoginForm");
         Elements links = content.getElementsByTag("input");
+
+        //构建form表单提交的参数
         Map<String, String> dataMap = new HashMap<>(10);
         for (Element link : links) {
             if ("hidden".equals(link.attr("type"))) {
                 dataMap.put(link.attr("name"), link.attr("value"));
             }
         }
+        //判断是不是会出现没有这个隐藏数据的可能
         if (dataMap.isEmpty()) {
-            throw new ParameterIsNullException("Hidden dataMap");
+            throw new ParameterIsNullException("Hidden dataMap Not found");
         }
-        //构建form表单提交的参数
         dataMap.put("username", this.username);
         dataMap.put("password", this.password);
 
@@ -112,16 +113,19 @@ public class GdutCralwer implements Crawler {
                     .method(Connection.Method.POST)
                     .execute();
         }
+        //当超过请求次数，认为教务系统发生异常
         if (res == null) {
             throw new EducationSystemException();
         }
+        //获取结果中的cookies
         Map<String, String> cookies = res.cookies();
 
         //如果cookies为空说明密码错误抛出异常
         if (cookies.isEmpty()) {
             throw new LoginException("LoginFail...May be caused by your wrong password");
         }
-        return new GdutCralwer.Response(cookies);
+        //成功返回一个带cookies的新请求体
+        return new GdutCrawler.Response(cookies);
     }
 
     public static class Response implements Crawler.Response {
@@ -163,7 +167,7 @@ public class GdutCralwer implements Crawler {
          * 爬虫仅仅获取目标json字符串不做任何处理，可通过service层自行提取所需字符
          *
          * @return 不做任何处理的课表json字符串
-         * @throws MaxFrequencyException
+         * @throws MaxFrequencyException 抛出最大请求异常，服务器超时
          */
         public String getGrade() throws MaxFrequencyException {
             Map<String, String> dataMap = new HashMap<>(6);
@@ -263,12 +267,12 @@ public class GdutCralwer implements Crawler {
     }
 
     @Override
-    public GdutCralwer timeout(int timeout) {
+    public GdutCrawler timeout(int timeout) {
         this.outTime = timeout;
         return this;
     }
 
-    public GdutCralwer frequencyOut(int count) {
+    public GdutCrawler frequencyOut(int count) {
         this.maxFrequency = count;
         return this;
     }

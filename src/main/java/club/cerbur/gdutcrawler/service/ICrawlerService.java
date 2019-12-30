@@ -4,7 +4,7 @@ import club.cerbur.gdutcrawler.exception.EducationSystemException;
 import club.cerbur.gdutcrawler.exception.LoginException;
 import club.cerbur.gdutcrawler.exception.MaxFrequencyException;
 import club.cerbur.gdutcrawler.exception.ParameterIsNullException;
-import club.cerbur.gdutcrawler.jsoup.GdutCralwer;
+import club.cerbur.gdutcrawler.jsoup.GdutCrawler;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.stereotype.Component;
 
@@ -28,7 +28,7 @@ public interface ICrawlerService {
      * @throws EducationSystemException 教务系统异常/教务系统bug
      * @throws MaxFrequencyException    超过最大请求次数异常/没用使用到
      */
-    GdutCralwer.Response getLoginResponse(String schoolId, String password) throws LoginException, IOException, ParameterIsNullException, EducationSystemException, MaxFrequencyException;
+    GdutCrawler.Response getLoginResponse(String schoolId, String password) throws LoginException, ParameterIsNullException, EducationSystemException, MaxFrequencyException;
 
     /**
      * 获取课表信息
@@ -38,7 +38,7 @@ public interface ICrawlerService {
      * @throws MaxFrequencyException   超过最大次数异常
      * @throws JsonProcessingException json转换异常
      */
-    String getScheduleJson(GdutCralwer.Response response) throws MaxFrequencyException, JsonProcessingException;
+    String getScheduleJson(GdutCrawler.Response response) throws MaxFrequencyException;
 
     /**
      * 获取成绩
@@ -48,11 +48,11 @@ public interface ICrawlerService {
      * @throws MaxFrequencyException   超过最大次数异常
      * @throws JsonProcessingException json转换异常
      */
-    String getGradeJson(GdutCralwer.Response response) throws MaxFrequencyException, JsonProcessingException;
+    String getGradeJson(GdutCrawler.Response response) throws MaxFrequencyException;
 
-    String getExamJson(GdutCralwer.Response response) throws MaxFrequencyException, JsonProcessingException;
+    String getExamJson(GdutCrawler.Response response) throws MaxFrequencyException;
 
-    String getCampusJson(GdutCralwer.Response response) throws MaxFrequencyException, JsonProcessingException;
+    String getCampusJson(GdutCrawler.Response response) throws MaxFrequencyException;
 
-    String getAllJson(GdutCralwer.Response response) throws MaxFrequencyException, JsonProcessingException;
+    String getAllJson(GdutCrawler.Response response) throws MaxFrequencyException;
 }

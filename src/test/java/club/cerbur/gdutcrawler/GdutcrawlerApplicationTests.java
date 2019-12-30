@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
-import java.io.IOException;
 
 @SpringBootTest
 class GdutcrawlerApplicationTests {
@@ -21,7 +20,7 @@ class GdutcrawlerApplicationTests {
     void contextLoads() {
         try {
             System.out.println(crawlerService.getLoginResponse("schoolId", "password"));
-        } catch (LoginException | IOException | ParameterIsNullException | EducationSystemException | MaxFrequencyException e) {
+        } catch (LoginException | ParameterIsNullException | EducationSystemException | MaxFrequencyException e) {
             e.printStackTrace();
         }
     }

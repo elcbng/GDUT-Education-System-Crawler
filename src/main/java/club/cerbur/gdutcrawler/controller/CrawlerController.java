@@ -1,5 +1,13 @@
 package club.cerbur.gdutcrawler.controller;
 
+import club.cerbur.gdutcrawler.exception.EducationSystemException;
+import club.cerbur.gdutcrawler.exception.LoginException;
+import club.cerbur.gdutcrawler.exception.MaxFrequencyException;
+import club.cerbur.gdutcrawler.exception.ParameterIsNullException;
+import club.cerbur.gdutcrawler.jsoup.GdutCrawler;
+import club.cerbur.gdutcrawler.result.GdutResult;
+import club.cerbur.gdutcrawler.result.ResultStatus;
+import club.cerbur.gdutcrawler.result.ResultUtil;
 import club.cerbur.gdutcrawler.service.ICrawlerService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,52 +23,117 @@ public class CrawlerController {
     private ICrawlerService crawlerService;
 
     @PostMapping("/class")
-    public String getScheduleJson(String schoolId, String password) {
+    public GdutResult<Object> getScheduleJson(String schoolId, String password) {
         try {
-            return crawlerService.getScheduleJson(crawlerService.getLoginResponse(schoolId, password));
-        } catch (Exception e) {
+            GdutCrawler.Response response = crawlerService.getLoginResponse(schoolId, password);
+            if (response == null) {
+                return ResultUtil.error(ResultStatus.JSOUPERROR);
+            }
+            return ResultUtil.success(crawlerService.getScheduleJson(response));
+        } catch (MaxFrequencyException e) {
             e.printStackTrace();
-            return e.getMessage();
+            return ResultUtil.error(ResultStatus.MAXFREQUENCYERROR);
+        } catch (LoginException e) {
+            e.printStackTrace();
+            return ResultUtil.error(ResultStatus.LOGINERROR);
+        } catch (ParameterIsNullException e) {
+            e.printStackTrace();
+            return ResultUtil.error(ResultStatus.PARAMMISSERROR);
+        } catch (EducationSystemException e) {
+            e.printStackTrace();
+            return ResultUtil.error(ResultStatus.EDUCATIONSYSTEMERROR);
         }
     }
 
     @PostMapping("/grade")
-    public String getGradeJson(String schoolId, String password) {
+    public GdutResult<Object> getGradeJson(String schoolId, String password) {
         try {
-            return crawlerService.getGradeJson(crawlerService.getLoginResponse(schoolId, password));
-        } catch (Exception e) {
+            GdutCrawler.Response response = crawlerService.getLoginResponse(schoolId, password);
+            if (response == null) {
+                return ResultUtil.error(ResultStatus.JSOUPERROR);
+            }
+            return ResultUtil.success(crawlerService.getGradeJson(response));
+        } catch (MaxFrequencyException e) {
             e.printStackTrace();
-            return e.getMessage();
+            return ResultUtil.error(ResultStatus.MAXFREQUENCYERROR);
+        } catch (LoginException e) {
+            e.printStackTrace();
+            return ResultUtil.error(ResultStatus.LOGINERROR);
+        } catch (ParameterIsNullException e) {
+            e.printStackTrace();
+            return ResultUtil.error(ResultStatus.PARAMMISSERROR);
+        } catch (EducationSystemException e) {
+            e.printStackTrace();
+            return ResultUtil.error(ResultStatus.EDUCATIONSYSTEMERROR);
         }
     }
 
     @PostMapping("/exam")
-    public String getExamJson(String schoolId, String password) {
+    public GdutResult<Object> getExamJson(String schoolId, String password) {
         try {
-            return crawlerService.getExamJson(crawlerService.getLoginResponse(schoolId, password));
-        } catch (Exception e) {
+            GdutCrawler.Response response = crawlerService.getLoginResponse(schoolId, password);
+            if (response == null) {
+                return ResultUtil.error(ResultStatus.JSOUPERROR);
+            }
+            return ResultUtil.success(crawlerService.getExamJson(response));
+        } catch (MaxFrequencyException e) {
             e.printStackTrace();
-            return e.getMessage();
+            return ResultUtil.error(ResultStatus.MAXFREQUENCYERROR);
+        } catch (LoginException e) {
+            e.printStackTrace();
+            return ResultUtil.error(ResultStatus.LOGINERROR);
+        } catch (ParameterIsNullException e) {
+            e.printStackTrace();
+            return ResultUtil.error(ResultStatus.PARAMMISSERROR);
+        } catch (EducationSystemException e) {
+            e.printStackTrace();
+            return ResultUtil.error(ResultStatus.EDUCATIONSYSTEMERROR);
         }
     }
 
     @PostMapping("/campus")
-    public String getCampusJson(String schoolId, String password) {
+    public GdutResult<Object> getCampusJson(String schoolId, String password) {
         try {
-            return crawlerService.getCampusJson(crawlerService.getLoginResponse(schoolId, password));
-        } catch (Exception e) {
+            GdutCrawler.Response response = crawlerService.getLoginResponse(schoolId, password);
+            if (response == null) {
+                return ResultUtil.error(ResultStatus.JSOUPERROR);
+            }
+            return ResultUtil.success(crawlerService.getCampusJson(response));
+        } catch (MaxFrequencyException e) {
             e.printStackTrace();
-            return e.getMessage();
+            return ResultUtil.error(ResultStatus.MAXFREQUENCYERROR);
+        } catch (LoginException e) {
+            e.printStackTrace();
+            return ResultUtil.error(ResultStatus.LOGINERROR);
+        } catch (ParameterIsNullException e) {
+            e.printStackTrace();
+            return ResultUtil.error(ResultStatus.PARAMMISSERROR);
+        } catch (EducationSystemException e) {
+            e.printStackTrace();
+            return ResultUtil.error(ResultStatus.EDUCATIONSYSTEMERROR);
         }
     }
 
     @PostMapping("/all")
-    public String getAllJson(String schoolId, String password) {
+    public GdutResult<Object> getAllJson(String schoolId, String password) {
         try {
-            return crawlerService.getAllJson(crawlerService.getLoginResponse(schoolId, password));
-        } catch (Exception e) {
+            GdutCrawler.Response response = crawlerService.getLoginResponse(schoolId, password);
+            if (response == null) {
+                return ResultUtil.error(ResultStatus.JSOUPERROR);
+            }
+            return ResultUtil.success(crawlerService.getAllJson(response));
+        } catch (MaxFrequencyException e) {
             e.printStackTrace();
-            return e.getMessage();
+            return ResultUtil.error(ResultStatus.MAXFREQUENCYERROR);
+        } catch (LoginException e) {
+            e.printStackTrace();
+            return ResultUtil.error(ResultStatus.LOGINERROR);
+        } catch (ParameterIsNullException e) {
+            e.printStackTrace();
+            return ResultUtil.error(ResultStatus.PARAMMISSERROR);
+        } catch (EducationSystemException e) {
+            e.printStackTrace();
+            return ResultUtil.error(ResultStatus.EDUCATIONSYSTEMERROR);
         }
     }
 }

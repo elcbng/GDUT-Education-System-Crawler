@@ -4,7 +4,7 @@ import club.cerbur.gdutcrawler.exception.EducationSystemException;
 import club.cerbur.gdutcrawler.exception.LoginException;
 import club.cerbur.gdutcrawler.exception.MaxFrequencyException;
 import club.cerbur.gdutcrawler.exception.ParameterIsNullException;
-import club.cerbur.gdutcrawler.jsoup.GdutCralwer;
+import club.cerbur.gdutcrawler.jsoup.GdutCrawler;
 import club.cerbur.gdutcrawler.model.Exam;
 import club.cerbur.gdutcrawler.model.Grade;
 import club.cerbur.gdutcrawler.model.Schedule;
@@ -24,21 +24,26 @@ import java.util.List;
 public class CrawlerServiceImpl implements ICrawlerService {
 
     @Override
-    public GdutCralwer.Response getLoginResponse(String schoolId, String password) throws ParameterIsNullException, EducationSystemException, LoginException, IOException, MaxFrequencyException {
-        GdutCralwer crawler = new GdutCralwer(schoolId, password);
+    public GdutCrawler.Response getLoginResponse(String schoolId, String password) throws ParameterIsNullException, EducationSystemException, LoginException {
+        GdutCrawler crawler = new GdutCrawler(schoolId, password);
         try {
-            return crawler.timeout(500000).connect();
-        } catch (ParameterIsNullException | EducationSystemException | LoginException | IOException | MaxFrequencyException e) {
+            try {
+                return crawler.timeout(50000).connect();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        } catch (ParameterIsNullException | EducationSystemException | LoginException e) {
             e.printStackTrace();
             throw e;
         }
     }
 
     @Override
-    public String getScheduleJson(GdutCralwer.Response response) throws MaxFrequencyException, JsonProcessingException {
+    public String getScheduleJson(GdutCrawler.Response response) throws MaxFrequencyException {
         String res;
         try {
-            res = response.timeout(500000).getSchedule();
+            res = response.timeout(50000).getSchedule();
         } catch (MaxFrequencyException e) {
             e.printStackTrace();
             throw e;
@@ -49,13 +54,12 @@ public class CrawlerServiceImpl implements ICrawlerService {
             res = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(schedules);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
-            throw e;
         }
         return res;
     }
 
     @Override
-    public String getGradeJson(GdutCralwer.Response response) throws MaxFrequencyException, JsonProcessingException {
+    public String getGradeJson(GdutCrawler.Response response) throws MaxFrequencyException {
         String res;
         try {
             res = response.timeout(500000).getGrade();
@@ -69,13 +73,12 @@ public class CrawlerServiceImpl implements ICrawlerService {
             res = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(grades);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
-            throw e;
         }
         return res;
     }
 
     @Override
-    public String getExamJson(GdutCralwer.Response response) throws MaxFrequencyException, JsonProcessingException {
+    public String getExamJson(GdutCrawler.Response response) throws MaxFrequencyException {
         String res;
         try {
             res = response.timeout(500000).getExam();
@@ -89,13 +92,12 @@ public class CrawlerServiceImpl implements ICrawlerService {
             res = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(exams);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
-            throw e;
         }
         return res;
     }
 
     @Override
-    public String getCampusJson(GdutCralwer.Response response) throws MaxFrequencyException, JsonProcessingException {
+    public String getCampusJson(GdutCrawler.Response response) throws MaxFrequencyException {
         String res;
         try {
             res = response.getCampus();
@@ -107,7 +109,7 @@ public class CrawlerServiceImpl implements ICrawlerService {
     }
 
     @Override
-    public String getAllJson(GdutCralwer.Response response) throws MaxFrequencyException, JsonProcessingException {
+    public String getAllJson(GdutCrawler.Response response) throws MaxFrequencyException {
         String curriculum = getScheduleJson(response);
         String exam = getExamJson(response);
         String campus = getCampusJson(response);
